@@ -1,0 +1,13 @@
+{
+  "name": "cute-confession-web",
+  "version": "1.0.0",
+  "description": "เว็บขอเป็นแฟนสุดน่ารัก สไตล์ Storybook พร้อมมีมแมวต่อยและ Kaneki ending",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "deploy:azure": "npx @azure/static-web-apps-cli deploy . --env production"
+  },
+  "keywords": ["confession", "cute", "meme", "cat-punch", "azure-static-web-apps"],
+  "author": "",
+  "license": "MIT"
+}

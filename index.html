@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>มีเรื่องจะบอกนะ... 💌</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
+
+  <!-- Google Fonts: Mitr & Prompt for cute modern Thai typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Mitr:wght@300;400;500;600;700&family=Prompt:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Floating Background Hearts / Sparkles -->
+  <div class="bg-decorations" id="bgDecorations"></div>
+
+  <!-- Music Floating Widget -->
+  <div class="music-widget" id="musicWidget" title="เปิด/ปิดเพลง">
+    <div class="music-disc" id="musicDisc">🎵</div>
+    <div class="sound-wave" id="soundWave">
+      <span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <!-- QR Code Pill (Subtle for mobile test) -->
+  <div class="qr-pill" id="qrPill" title="สแกนทดสอบบนมือถือ">
+    <span>📱 เปิดเล่นบนมือถือ</span>
+  </div>
+
+  <!-- Main Story Deck Card -->
+  <main class="story-wrapper">
+    <div class="story-card" id="storyCard">
+      
+      <!-- Top Progress Bars (Instagram Stories Style) -->
+      <header class="story-header">
+        <div class="progress-bar-container" id="progressBarContainer">
+          <div class="progress-segment"><div class="progress-fill"></div></div>
+          <div class="progress-segment"><div class="progress-fill"></div></div>
+          <div class="progress-segment"><div class="progress-fill"></div></div>
+          <div class="progress-segment"><div class="progress-fill"></div></div>
+          <div class="progress-segment"><div class="progress-fill"></div></div>
+        </div>
+        <div class="header-meta">
+          <span class="user-badge" id="slideBadge">✨ Chapter 1</span>
+          <span class="tap-hint" id="tapHint">แตะที่จอเพื่อไปต่อ 👆</span>
+        </div>
+      </header>
+
+      <!-- Slide Content Area (Tappable) -->
+      <section class="slide-content-area" id="slideClickArea">
+        
+        <!-- Image / Meme Container -->
+        <div class="media-container" id="mediaContainer">
+          <!-- Slide 4 Game / Money Props -->
+          <div class="troll-props" id="trollProps" style="display: none;">
+            <span class="prop-item prop-coin1">💸</span>
+            <span class="prop-item prop-game">🎮</span>
+            <span class="prop-item prop-coin2">💎</span>
+          </div>
+
+          <div class="img-wrapper">
+            <img id="slideImage" src="" alt="Meme / Cute GIF" loading="eager">
+            <div class="image-skeleton" id="imageSkeleton">
+              <span class="loading-heart">💖</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Container -->
+        <div class="text-container" id="textContainer">
+          <h1 class="slide-title" id="slideTitle">กำลังโหลด...</h1>
+          <h2 class="slide-highlight" id="slideHighlight"></h2>
+          <p class="slide-subtext" id="slideSubtext"></p>
+        </div>
+
+        <!-- Choice Question Area (Active only on Slide 5) -->
+        <div class="choice-container" id="choiceContainer" style="display: none;">
+          
+          <!-- มีมแมวชี้ ให้เลือกอีกปุ่ม (Cat Pointing Meme) -->
+          <div class="cat-pointer-box" id="catPointerBox" style="display: none;">
+            <div class="pointer-bubble">กดปุ่มนี้เซ่!! 😾👉</div>
+            <img src="assets/cat_point.gif" alt="Cat Pointing Meme" class="cat-point-img">
+          </div>
+
+          <div class="buttons-row">
+            <button class="btn btn-yes" id="btnYes">
+              <span class="btn-icon">💖</span>
+              <span class="btn-text" id="btnYesText">เป็นดิ รอนานละ 💖</span>
+            </button>
+            <button class="btn btn-no" id="btnNo">
+              <span class="btn-text" id="btnNoText">ไม่เป็น 😐</span>
+            </button>
+          </div>
+          <p class="choice-tip" id="choiceTip">*หมายเหตุ: เว็บนี้ไม่มีฟังก์ชันปฏิเสธนะจ๊ะ 5555</p>
+        </div>
+
+      </section>
+
+      <!-- Bottom Hint Footer -->
+      <footer class="story-footer">
+        <div class="heart-pulse">💌</div>
+        <div class="footer-dots" id="footerDots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- PUNCH CAT POPUP OVERLAY (เมื่อกด 'ไม่เป็น') -->
+  <div class="punch-overlay" id="punchOverlay">
+    <div class="punch-card">
+      <img src="assets/angry_vein.svg" alt="Angry Vein" class="angry-vein-prop">
+      
+      <div class="punch-bubble" id="punchBubble">เดี๋ยวเถอะ!! เล่นตัวนักนะ! 😾👊</div>
+      
+      <div class="punch-img-wrapper">
+        <img src="assets/cat_punch.gif" alt="Cat Punch" class="punch-img">
+        <div class="comic-pow">POW! 💥</div>
+      </div>
+
+      <div class="punch-pointing-guide">
+        <img src="assets/cat_point.gif" alt="Cat Pointing" class="modal-point-cat">
+        <span class="guide-text">แมวสั่งให้ไปกดปุ่ม 'เป็น' เดี๋ยวนี้! 😾👉</span>
+      </div>
+
+      <button class="btn btn-back-to-yes" id="btnPunchOk">
+        โอเค ยอมแล้ววว 😭
+      </button>
+    </div>
+  </div>
+
+  <!-- ENDING SCREEN: KANEKI EDGY ANIME CLIMAX (FULL-SCREEN & CLEAN) -->
+  <div class="ending-overlay" id="endingOverlay">
+    <div class="cinematic-backdrop"></div>
+
+    <div class="ending-card" id="endingCard">
+      <!-- Big Kaneki Avatar with Halo -->
+      <div class="avatar-halo-wrap">
+        <img src="assets/magic_circle.svg" alt="Magic Circle" class="magic-circle-halo">
+        
+        <div class="kaneki-img-box">
+          <img id="kanekiImg" src="assets/kaneki_laugh.gif" alt="Tokyo Ghoul Kaneki Ken">
+          <div class="kakugan-eye"></div>
+          <div class="kaneki-aura"></div>
+        </div>
+      </div>
+
+      <!-- Main Punchy Title & Subtitle -->
+      <h1 class="ending-title" id="endingTitle">ฮิๆๆๆๆ ฉันรู้อยู่แล้วละ! 😈</h1>
+      <p class="ending-subtitle" id="endingSubtitle">เป็นแฟนกันแล้วนะ ห้ามคืนคำเด็ดขาด! 💖</p>
+
+      <!-- Minimal Couple Names Badge -->
+      <div class="couple-pill">
+        <span class="couple-name" id="contractSender">เค้า</span>
+        <span class="couple-heart">❤️</span>
+        <span class="couple-name" id="contractReceiver">เธอ</span>
+      </div>
+
+      <!-- Action Button: Only Replay Button (Clean & Minimal) -->
+      <div class="ending-actions">
+        <button class="action-btn btn-replay-clean" id="btnReplay">
+          <span>🔄 ย้อนดูอีกรอบ</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR CODE MODAL FOR MOBILE TESTING -->
+  <div class="punch-overlay" id="qrModal">
+    <div class="punch-card" style="border-color: #ff85a1;">
+      <h3 style="color: #d6336c; font-size: 1.15rem;">📱 สแกนเปิดบนมือถือ</h3>
+      <p style="font-size: 0.8rem; color: #6c757d;" id="qrDesc">ให้อุปกรณ์เชื่อมต่อ Wi-Fi เดียวกัน หรือแชร์ลิงก์ให้เพื่อนได้เลยครับ</p>
+      <div style="background: #fff; padding: 10px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+        <img id="qrImg" src="" alt="QR Code" style="width: 170px; height: 170px; display: block;">
+      </div>
+      <p style="font-size: 0.85rem; font-family: monospace; color: #ff4d6d; font-weight: bold; word-break: break-all;" id="qrUrlText"></p>
+      <button class="btn btn-back-to-yes" id="btnCloseQr">ปิดหน้าต่าง</button>
+    </div>
+  </div>
+
+  <!-- Audio Element for BGM -->
+  <audio id="bgmAudio" preload="auto" loop playsinline></audio>
+
+  <!-- Scripts -->
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
